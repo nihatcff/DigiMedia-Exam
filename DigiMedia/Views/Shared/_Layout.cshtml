@@ -14,7 +14,7 @@
     <title>DigiMedia - Creative SEO HTML5 Template</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 
     <!-- Additional CSS Files -->
@@ -33,18 +33,7 @@
 
 <body>
 
-    <!-- ***** Preloader Start ***** -->
-    <div id="js-preloader" class="js-preloader">
-        <div class="preloader-inner">
-            <span class="dot"></span>
-            <div class="dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </div>
-    <!-- ***** Preloader End ***** -->
+ 
     <!-- Pre-header Starts -->
     <div class="pre-header">
         <div class="container">
@@ -80,6 +69,17 @@
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
+                            @if (User.Identity?.IsAuthenticated ?? false)
+                            {
+                                <li class="scroll-to-section"><a href="#" >@User.Identity.Name</a></li>
+                                <li class="scroll-to-section"><a asp-action="Logout" asp-controller="Account">Logout</a></li>
+                            }
+                            else
+                            {
+                                <li class="scroll-to-section"><a asp-action="Login" asp-controller="Account">Login</a></li>
+                                <li class="scroll-to-section"><a asp-action="Register" asp-controller="Account">Register</a></li>
+                                
+                            }
                             <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
                             <li class="scroll-to-section"><a href="#about">About</a></li>
                             <li class="scroll-to-section"><a href="#services">Services</a></li>
@@ -121,6 +121,7 @@
     <script src="~/assets/js/animation.js"></script>
     <script src="~/assets/js/imagesloaded.js"></script>
     <script src="~/assets/js/custom.js"></script>
-    
+    @RenderSection("Scripts", false);
+
 </body>
 </html>

@@ -1,12 +1,15 @@
 ﻿using System.Threading.Tasks;
 using DigiMedia.Contexts;
+using DigiMedia.Enums;
 using DigiMedia.Models;
 using DigiMedia.ViewModels.CategoryViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DigiMedia.Areas.Admin.Controllers;
 [Area("Admin")]
+[Authorize(Roles = "Admin")]
 public class CategoryController(AppDbContext _context) : Controller
 {
     public async Task<IActionResult> Index()

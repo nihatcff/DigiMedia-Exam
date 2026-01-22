@@ -1,4 +1,6 @@
+using System.Threading.Tasks;
 using DigiMedia.Contexts;
+using DigiMedia.Helpers;
 using DigiMedia.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -7,11 +9,13 @@ namespace DigiMedia
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddScoped<DbContextInitializer>();
 
             builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
             {
@@ -28,6 +32,9 @@ namespace DigiMedia
 
             var app = builder.Build();
 
+            var scope = app.Services.CreateScope();
+            var contextInitializer = scope.ServiceProvider.GetRequiredService<DbContextInitializer>();
+            await contextInitializer.InitializeDatabaseAsync();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

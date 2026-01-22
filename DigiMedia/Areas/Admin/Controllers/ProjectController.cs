@@ -3,11 +3,13 @@ using DigiMedia.Contexts;
 using DigiMedia.Helpers;
 using DigiMedia.Models;
 using DigiMedia.ViewModels.ProjectViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DigiMedia.Areas.Admin.Controllers;
 [Area("Admin")]
+[Authorize(Roles = "Admin")]
 public class ProjectController : Controller
 {
     private readonly AppDbContext _context;

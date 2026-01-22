@@ -1,13 +1,25 @@
 using System.Diagnostics;
+using System.Threading.Tasks;
+using DigiMedia.Contexts;
+using DigiMedia.ViewModels.ProjectViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DigiMedia.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController(AppDbContext _context) : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var projects = await _context.Projects.Select(x=>new ProjectGetVM()
+            {
+                Id = x.Id,
+                Title = x.Title,
+                CategoryName = x.Category.Name,
+                ImagePath = x.ImagePath
+            }).ToListAsync();
+
+            return View(projects);
         }
 
     }
